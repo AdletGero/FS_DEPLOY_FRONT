@@ -12,11 +12,11 @@ import Login from "./Login";
 import Register from "./Register";
 import { api, CARS_BASE, clearJwt, getJwt } from "./api";
 
-const API_URL = `${CARS_BASE}/cars`;
+const API_URL = "/cars";
 
 function App() {
-    const [isAuth, setIsAuth] = useState(!!getJwt());
-    const [showRegister, setShowRegister] = useState(false);
+    // const [isAuth, setIsAuth] = useState(!!getJwt());
+    // const [showRegister, setShowRegister] = useState(false);
 
     const [cars, setCars] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -33,13 +33,13 @@ function App() {
     });
 
     // ------- auth gate -------
-    if (!isAuth) {
-        return showRegister ? (
-            <Register goToLogin={() => setShowRegister(false)} />
-        ) : (
-            <Login onLogin={() => setIsAuth(true)} goToRegister={() => setShowRegister(true)} />
-        );
-    }
+    // if (!isAuth) {
+    //     return showRegister ? (
+    //         <Register goToLogin={() => setShowRegister(false)} />
+    //     ) : (
+    //         <Login onLogin={() => setIsAuth(true)} goToRegister={() => setShowRegister(true)} />
+    //     );
+    // }
 
     // ------- data ------
     const fetchCars = async () => {
@@ -62,9 +62,14 @@ function App() {
         }
     };
 
+    // useEffect(() => {
+    //     if (isAuth) fetchCars();
+    // }, [isAuth]);
+
     useEffect(() => {
-        if (isAuth) fetchCars();
-    }, [isAuth]);
+        fetchCars();
+    }, []);
+
 
 
     // ------- sorting ------
@@ -160,7 +165,7 @@ function App() {
         <div style={{ padding: "40px", fontFamily: "system-ui" }}>
             <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
                 <h1>Car Management</h1>
-                <Button variant="outlined" color="error" onClick={handleLogout}>Logout</Button>
+                {/*<Button variant="outlined" color="error" onClick={handleLogout}>Logout</Button>*/}
             </Stack>
 
             <Button variant="contained" color="primary" onClick={openCreateForm} sx={{ mb: 2 }}>

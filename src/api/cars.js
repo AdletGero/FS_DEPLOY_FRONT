@@ -1,28 +1,20 @@
-const API_URL = "http://localhost:8080/cars";
+import { api } from "../api";
 
 export async function getCars() {
-    const res = await fetch(API_URL);
-    return res.json();
+    const { data } = await api.get("/cars");
+    return data;
 }
 
 export async function createCar(car) {
-    const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(car)
-    });
-    return res.json();
+    const { data } = await api.post("/cars", car);
+    return data;
 }
 
 export async function updateCar(id, car) {
-    const res = await fetch(`${API_URL}/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(car)
-    });
-    return res.json();
+    const { data } = await api.put(`/cars/${id}`, car);
+    return data;
 }
 
 export async function deleteCar(id) {
-    return fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    await api.delete(`/cars/${id}`);
 }
